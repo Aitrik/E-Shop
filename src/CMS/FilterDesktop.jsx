@@ -29,9 +29,7 @@ export default function FilterDesktop() {
   // Handle price checkbox change
   const handlePriceChange = (price) => {
     setSelectedPrice((prev) =>
-      prev.includes(price)
-        ? prev.filter((p) => p !== price)
-        : [...prev, price]
+      prev.includes(price) ? prev.filter((p) => p !== price) : [...prev, price]
     );
   };
 
@@ -65,12 +63,11 @@ export default function FilterDesktop() {
     return 0; // No sorting
   });
 
-
-  const ClearFilters=()=>{
-    setSelectedCategories([])
-    setSelectedPrice([])
-    setSortOrder("")
-  }
+  const ClearFilters = () => {
+    setSelectedCategories([]);
+    setSelectedPrice([]);
+    setSortOrder("");
+  };
   return (
     <>
       {status === "loading" ? (
@@ -115,8 +112,24 @@ export default function FilterDesktop() {
         // Sidebar for desktop
         <div className="w-1/4 hidden md:block h-screen sticky top-0 bg-gray-100 p-6 shadow-lg transition-transform duration-300 overflow-auto">
           <div className="flex justify-between items-center">
-          <h2 className="text-lg font-bold mb-4">Filters</h2>
-          <button className="mb-4 bg-red-600 px-2 py-1 rounded-md text-white" onClick={ClearFilters}>Reset</button>
+            <h2 className="text-lg font-bold mb-4">Filters</h2>
+            <button
+              className={`mb-4 px-2 py-1 rounded-md text-white ${
+                selectedCategories <= 0 &&
+                selectedPrice <= 0 &&
+                sortOrder === ""
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-red-600 hover:bg-red-700"
+              }`}
+              onClick={ClearFilters}
+              disabled={
+                selectedCategories <= 0 &&
+                selectedPrice <= 0 &&
+                sortOrder === ""
+              }
+            >
+              Reset
+            </button>
           </div>
           <ul className="list-none space-y-6">
             <li>
@@ -160,20 +173,22 @@ export default function FilterDesktop() {
             <li>
               <h3 className="font-semibold mb-2">Sort By</h3>
               <ul className="list-none space-y-2">
-                {["High to Low", "Low to High", "Rating"].map((sortOption, index) => (
-                  <li key={index}>
-                    <label className="flex items-center space-x-2 hover:text-indigo-500">
-                      <input
-                        type="radio"
-                        className="form-radio mr-2"
-                        name="sort"
-                        checked={sortOrder === sortOption}
-                        onChange={() => handleSortChange(sortOption)}
-                      />
-                      {sortOption}
-                    </label>
-                  </li>
-                ))}
+                {["High to Low", "Low to High", "Rating"].map(
+                  (sortOption, index) => (
+                    <li key={index}>
+                      <label className="flex items-center space-x-2 hover:text-indigo-500">
+                        <input
+                          type="radio"
+                          className="form-radio mr-2"
+                          name="sort"
+                          checked={sortOrder === sortOption}
+                          onChange={() => handleSortChange(sortOption)}
+                        />
+                        {sortOption}
+                      </label>
+                    </li>
+                  )
+                )}
               </ul>
             </li>
           </ul>
