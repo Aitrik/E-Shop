@@ -5,7 +5,8 @@ const initialState = {
     productData:[],
     status:"idle",
     catData:[],
-    searchData:[]
+    searchData:[],
+    CatProdData:[]
 }
 
 
@@ -31,6 +32,14 @@ export const search = createAsyncThunk(
     "search",
     async (name) => {
         let res = await axios.get(`https://dummyjson.com/products/search?q=${name}`)
+        return res.data
+    }
+)
+
+export const categoryProd = createAsyncThunk(
+    "categoryProd",
+    async (slug) => {
+        let res = await axios.get(`https://dummyjson.com/products/category/${slug}`)
         return res.data
     }
 )
@@ -76,6 +85,18 @@ export const Slice = createSlice({
             state.searchData = payload.products
         })
         .addCase(search.rejected, (state, action) => {
+            state.status = "idle"
+        })
+
+        
+        .addCase(categoryProd.pending, (state, action) => {
+            state.status = "loading"
+        })
+        .addCase(categoryProd.fulfilled, (state, { payload }) => {
+            state.status = "idle"
+            state.CatProdData = payload.products
+        })
+        .addCase(categoryProd.rejected, (state, action) => {
             state.status = "idle"
         })
 

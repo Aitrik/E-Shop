@@ -133,7 +133,7 @@ export default function FilterDesktop() {
           </div>
           <ul className="list-none space-y-6">
             <li>
-              <h3 className="font-semibold mb-2">Categories</h3>
+              <h3 className="font-semibold mb-2">Categories -</h3>
               <ul className="list-none space-y-2">
                 {catData.map((item) => (
                   <li key={item.id}>
@@ -152,9 +152,9 @@ export default function FilterDesktop() {
             </li>
 
             <li>
-              <h3 className="font-semibold mb-2">Price</h3>
+              <h3 className="font-semibold mb-2">Price Within -</h3>
               <ul className="list-none space-y-2">
-                {[20, 50, 100, 200].map((price, index) => (
+                {[20, 50, 100, 300,500,700,1000].map((price, index) => (
                   <li key={index}>
                     <label className="flex items-center space-x-2 hover:text-indigo-500">
                       <input
@@ -171,7 +171,7 @@ export default function FilterDesktop() {
             </li>
 
             <li>
-              <h3 className="font-semibold mb-2">Sort By</h3>
+              <h3 className="font-semibold mb-2">Sort By -</h3>
               <ul className="list-none space-y-2">
                 {["High to Low", "Low to High", "Rating"].map(
                   (sortOption, index) => (

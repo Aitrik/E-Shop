@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { search } from "../Redux/Slice";
 
-const SkeletonCard = () => (
+export const SkeletonCard = () => (
   <div className="w-72 bg-white shadow-md rounded-xl border border-gray-300 p-4 animate-pulse">
     <div className="h-80 bg-gray-300 rounded-t-xl"></div>
     <div className="px-4 py-2 w-72">
@@ -39,7 +39,7 @@ export default function SearchResults() {
       >
         {status === "loading" ? (
           // Display skeleton loaders while loading
-          Array.from({ length: 6 }).map((_, index) => (
+          Array.from({ length: searchData.length }).map((_, index) => (
             <SkeletonCard key={index} />
           ))
         ) : (
@@ -51,6 +51,7 @@ export default function SearchResults() {
                   src={item.thumbnail}
                   alt="Product"
                   className="h-80 w-72 object-cover rounded-t-xl"
+                  loading="lazy"
                 />
                 <div className="px-4 py-2 w-72 bg-yellow-300">
                   <span className="text-gray-400 mr-3 uppercase text-xs">

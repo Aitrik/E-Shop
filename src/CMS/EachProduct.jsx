@@ -35,9 +35,9 @@ export default function EachProduct() {
               <img
                 src={mainImage || "https://via.placeholder.com/600"}
                 alt={data.title}
-                className="w-full h-auto rounded-lg shadow-md mb-4 border border-gray-300"
-                id="mainImage"
+                className="w-full max-auto h-auto rounded-lg shadow-md mb-4 border border-gray-300 object-cover"
               />
+
               <div className="flex gap-4 py-4 overflow-auto">
                 {data?.images?.map((item, index) => (
                   <img
@@ -66,7 +66,9 @@ export default function EachProduct() {
               </div>
 
               <div className="mb-4">
-                <span className="text-gray-700 font-bold mr-2 bg-yellow-500 p-2 rounded-md">${data.warrantyInformation}</span>
+                <span className="text-gray-700 font-bold mr-2 bg-yellow-500 p-2 rounded-md">
+                  {data.warrantyInformation}
+                </span>
                 {data.shippingInformation && (
                   <span className="text-gray-500 font-bold mr-2 ">
                     {data.shippingInformation}

@@ -33,7 +33,6 @@ export default function Categories() {
                 fill="currentFill"
               />
             </svg>
-            <span className="sr-only">Loading...</span>
           </div>
         </div>
       ) : (
@@ -47,7 +46,7 @@ export default function Categories() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-16 ">
                 {catData.map((item) => (
-                  <Link to={`${item.slug}`}>
+                  <Link to={`/category/${item.slug}`}>
                     <div className="bg-white  border border-gray-300 rounded-lg shadow-md p-6 items-center">
                       <h2 className="text-xl font-bold text-purple-900 mb-4 items-center">
                         {item.name}
