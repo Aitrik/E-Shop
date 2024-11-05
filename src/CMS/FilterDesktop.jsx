@@ -154,7 +154,7 @@ export default function FilterDesktop() {
             <li>
               <h3 className="font-semibold mb-2">Price Within -</h3>
               <ul className="list-none space-y-2">
-                {[20, 50, 100, 300,500,700,1000].map((price, index) => (
+                {[20, 50, 100, 300, 500, 700, 1000].map((price, index) => (
                   <li key={index}>
                     <label className="flex items-center space-x-2 hover:text-indigo-500">
                       <input
@@ -195,7 +195,30 @@ export default function FilterDesktop() {
           <div className="h-20"></div>
         </div>
       )}
-      <Products productData={sortedProducts} status={status} />
+
+      <div className="w-full md:w-3/4 bg-white p-4">
+        {/* Hamburger Icon for small screens */}
+        <button className="md:hidden bg-yellow-400 text-gray-700 text-lg p-2 rounded-md mb-4">
+          <p className="flex gap-1">
+            Filter{" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
+              />
+            </svg>
+          </p>
+        </button>
+        <Products productData={sortedProducts} status={status} />
+      </div>
     </>
   );
 }

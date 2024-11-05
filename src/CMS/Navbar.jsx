@@ -12,9 +12,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "/", current: true },
+  { name: "Home", href: "/", current: false },
   { name: "Shop", href: "/shop", current: false },
   { name: "Categories", href: "/category", current: false },
+  { name: "Cart", href: "/cart", current: false },
 ];
 
 function classNames(...classes) {
@@ -205,12 +206,16 @@ export default function Example() {
 
           {/* Search bar for mobile view */}
           <div className="px-2 flex gap-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-gray-600"
-            />
-            <button className="bg-white text-black p-2 rounded-lg">
+            <form onSubmit={Route} className="w-full">
+              <input
+                type="text"
+                value={searchData}
+                placeholder="Search..."
+                className="rounded-md border border-gray-300 px-2 py-1 w-full focus:outline-none focus:border-gray-600"
+                onChange={(e) => setData(e.target.value)}
+              />
+            </form>
+            <button className="bg-white text-black p-1 rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

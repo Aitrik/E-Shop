@@ -6,6 +6,7 @@ import Categories from "./CMS/Categories";
 import EachProduct from "./CMS/EachProduct";
 import SearchResults from "./CMS/SearchResults";
 import CategoryProducts from "./CMS/CategoryProducts";
+import Cart from "./CMS/Cart";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/category" element={<Categories />} />
           <Route path="/category/:slug" element={<CategoryProducts />} />
           <Route path="/search/:name" element={<SearchResults />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </BrowserRouter>
     </>
