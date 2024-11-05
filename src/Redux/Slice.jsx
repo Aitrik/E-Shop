@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const initialState = {
   productData: [],
@@ -52,6 +53,7 @@ export const Slice = createSlice({
   
         // Update local storage
         localStorage.setItem('cartData', JSON.stringify(state.cartData));
+        toast.success("Item added to cart")
       },
       removeFromCart: (state, action) => {
         const productId = action.payload;
@@ -61,6 +63,7 @@ export const Slice = createSlice({
         if (removeIndex !== -1) {
           state.cartData.splice(removeIndex, 1);
           localStorage.setItem("cartData", JSON.stringify(state.cartData));
+          toast.success("Item removed to cart")
         }
       }
       
