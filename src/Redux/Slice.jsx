@@ -63,7 +63,7 @@ export const Slice = createSlice({
         if (removeIndex !== -1) {
           state.cartData.splice(removeIndex, 1);
           localStorage.setItem("cartData", JSON.stringify(state.cartData));
-          toast.success("Item removed to cart")
+          toast.success("Item removed from cart")
         }
       }
       
