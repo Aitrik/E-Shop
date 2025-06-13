@@ -139,7 +139,7 @@ export default function Home() {
               </p>
               
               <div className="flex justify-start mt-8 gap-4">
-                <a
+                <Link
                   href="#"
                   className="group relative overflow-hidden uppercase py-3 px-6 rounded-2xl bg-gradient-to-r from-yellow-500 to-amber-500 border-2 border-transparent text-white text-md font-bold hover:from-yellow-600 hover:to-amber-600 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/25 hover:-translate-y-1"
                 >
@@ -147,15 +147,15 @@ export default function Home() {
                     Get started
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="group uppercase py-3 px-6 rounded-2xl bg-transparent border-2 border-yellow-500 text-yellow-600 hover:bg-yellow-50 hover:text-yellow-700 text-md font-bold transition-all duration-300 hover:-translate-y-1"
                 >
                   <span className="flex items-center gap-2">
                     Read more
                   </span>
-                </a>
+                </Link>
               </div>
             </div>
             

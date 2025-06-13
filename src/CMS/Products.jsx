@@ -9,7 +9,6 @@ const SkeletonLoader = () => (
       <div className="h-6 bg-yellow-200 rounded-full w-3/4 animate-pulse" />
       <div className="h-4 bg-yellow-200 rounded-full w-1/2 animate-pulse" />
       <div className="h-4 bg-yellow-200 rounded-full w-2/3 animate-pulse" />
-      <div className="h-5 bg-yellow-200 rounded-full w-1/3 animate-pulse" />
     </div>
   </article>
 );
@@ -178,7 +177,7 @@ export default function Products({ productData, status }) {
               <div className="absolute inset-0 w-16 h-16 border-4 border-yellow-200 rounded-full animate-pulse" />
             </div>
             <p className="mt-6 text-xl text-slate-600 font-medium">Loading amazing products...</p>
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6 w-full max-w-6xl">
               {[...Array(8)].map((_, index) => (
                 <SkeletonLoader key={index} />
               ))}

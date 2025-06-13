@@ -40,7 +40,7 @@ export default function Example() {
           <div className="flex w-full justify-between items-center">
             {/* Logo */}
             <div className="flex items-center pl-2">
-              <a
+              <Link
                 href="/"
                 className="group flex items-center gap-2 text-gray-900 hover:text-black transition-all"
               >
@@ -68,7 +68,7 @@ export default function Example() {
                 <span className="text-xl md:text-2xl font-extrabold tracking-tight">
                   Swegs
                 </span>
-              </a>
+              </Link>
             </div>
 
 
@@ -94,7 +94,7 @@ export default function Example() {
           <div className="hidden sm:flex sm:ml-6 sm:items-center sm:justify-center">
             <div className="flex space-x-4">
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   aria-current={item.current ? "page" : undefined}
@@ -106,7 +106,7 @@ export default function Example() {
                   )}
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -159,28 +159,28 @@ export default function Example() {
               </div>
               <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none">
                 <MenuItem>
-                  <a
+                  <Link
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Your Profile
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
+                  <Link
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Settings
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
+                  <Link
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Sign out
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
