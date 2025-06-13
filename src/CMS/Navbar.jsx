@@ -12,10 +12,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "/", current: false },
-  { name: "Shop", href: "/shop", current: false },
-  { name: "Categories", href: "/category", current: false },
-  { name: "Cart", href: "/cart", current: false },
+  { name: "Home", to: "/", current: false },
+  { name: "Shop", to: "/shop", current: false },
+  { name: "Categories", to: "/category", current: false },
+  { name: "Cart", to: "/cart", current: false },
 ];
 
 function classNames(...classes) {
@@ -41,7 +41,7 @@ export default function Example() {
             {/* Logo */}
             <div className="flex items-center pl-2">
               <Link
-                href="/"
+                to="/"
                 className="group flex items-center gap-2 text-gray-900 hover:text-black transition-all"
               >
                 <div className="bg-white p-2 rounded-xl shadow-md group-hover:scale-105 transition-transform">
@@ -96,7 +96,7 @@ export default function Example() {
               {navigation.map((item) => (
                 <Link
                   key={item.name}
-                  href={item.href}
+                  to={item.to}
                   aria-current={item.current ? "page" : undefined}
                   className={classNames(
                     item.current
@@ -160,7 +160,7 @@ export default function Example() {
               <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none">
                 <MenuItem>
                   <Link
-                    href="#"
+                    to="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Your Profile
@@ -168,7 +168,7 @@ export default function Example() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    href="#"
+                    to="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Settings
@@ -176,7 +176,7 @@ export default function Example() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    href="#"
+                    to="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Sign out
@@ -199,7 +199,7 @@ export default function Example() {
             <DisclosureButton
               key={item.name}
               as="a"
-              href={item.href}
+              to={item.to}
               aria-current={item.current ? "page" : undefined}
               className={classNames(
                 item.current
