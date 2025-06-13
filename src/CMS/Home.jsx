@@ -153,7 +153,6 @@ export default function Home() {
                   className="group uppercase py-3 px-6 rounded-2xl bg-transparent border-2 border-yellow-500 text-yellow-600 hover:bg-yellow-50 hover:text-yellow-700 text-md font-bold transition-all duration-300 hover:-translate-y-1"
                 >
                   <span className="flex items-center gap-2">
-                    <Eye className="w-4 h-4" />
                     Read more
                   </span>
                 </a>

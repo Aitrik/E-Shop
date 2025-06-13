@@ -98,3 +98,52 @@ export const reviews = [
     },
   ];
   
+
+  // Dummy reviews data
+export const dummyReviews = [
+  {
+    id: 1,
+    name: "Sarah Johnson",
+    rating: 5,
+    date: "2024-05-15",
+    comment: "Absolutely love this product! The quality exceeded my expectations and shipping was super fast. Highly recommend!",
+    verified: true,
+    helpful: 23
+  },
+  {
+    id: 2,
+    name: "Mike Chen",
+    rating: 4,
+    date: "2024-05-12",
+    comment: "Great value for money. Works exactly as described. Only minor issue is the packaging could be better.",
+    verified: true,
+    helpful: 18
+  },
+  {
+    id: 3,
+    name: "Emily Rodriguez",
+    rating: 5,
+    date: "2024-05-10",
+    comment: "This is my second purchase of this item. Consistent quality and the customer service is excellent!",
+    verified: true,
+    helpful: 31
+  },
+  {
+    id: 4,
+    name: "David Wilson",
+    rating: 3,
+    date: "2024-05-08",
+    comment: "Decent product but took longer to arrive than expected. Quality is good though.",
+    verified: false,
+    helpful: 7
+  },
+  {
+    id: 5,
+    name: "Lisa Thompson",
+    rating: 5,
+    date: "2024-05-05",
+    comment: "Perfect! Exactly what I was looking for. The design is beautiful and functionality is top-notch.",
+    verified: true,
+    helpful: 42
+  }
+];
