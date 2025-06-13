@@ -1,89 +1,228 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Star, Heart, ShoppingBag, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+
+const SkeletonLoader = () => (
+  <article className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-yellow-50 to-amber-50 border border-yellow-200/50 animate-pulse">
+    <div className="aspect-square bg-gradient-to-br from-yellow-200 to-amber-300 animate-pulse" />
+    <div className="p-6 space-y-3">
+      <div className="h-6 bg-yellow-200 rounded-full w-3/4 animate-pulse" />
+      <div className="h-4 bg-yellow-200 rounded-full w-1/2 animate-pulse" />
+      <div className="h-4 bg-yellow-200 rounded-full w-2/3 animate-pulse" />
+      <div className="h-5 bg-yellow-200 rounded-full w-1/3 animate-pulse" />
+    </div>
+  </article>
+);
+
+const ProductCard = ({ item }) => (
+  <Link to={`/product/${item.id}`}>
+    <article className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-yellow-50 border border-yellow-200/50 hover:border-amber-300/50 transition-all duration-500 hover:shadow-2xl hover:shadow-yellow-500/20 hover:-translate-y-2">
+      <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      <div className="relative aspect-square overflow-hidden">
+        <img
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          src={item.images?.[0] || "images/No_Image_Available.jpg"}
+          alt={item.title}
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
+        <button className="absolute top-4 right-4 p-2 rounded-full bg-white/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white hover:scale-110">
+          <Heart className="w-4 h-4 text-red-500" />
+        </button>
+        
+        <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          <button className="px-4 py-2 bg-black/80 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-black transition-colors">
+            Quick View
+          </button>
+        </div>
+      </div>
+      
+      <div className="p-6">
+        <h2 className="font-bold text-lg text-slate-800 group-hover:text-amber-600 transition-colors duration-300 mb-1">
+          {item.title}
+        </h2>
+        
+        <h3 className="text-sm font-medium text-amber-600 mb-2">
+          {item.brand}
+        </h3>
+        
+        <p className="text-slate-600 text-sm mb-3 line-clamp-2">
+          {item.description?.slice(0, 40)}...
+        </p>
+        
+        <div className="flex items-center gap-1 mb-3">
+          {[...Array(5)].map((_, i) => (
+            <Star
+              key={i}
+              className={`w-4 h-4 ${
+                i < Math.floor(item.rating) ? "text-yellow-400 fill-current" : "text-slate-300"
+              }`}
+            />
+          ))}
+          <span className="text-sm text-slate-600 ml-2">{item.rating}</span>
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <span className="text-2xl font-bold text-slate-800">${item.price}</span>
+          <button className="p-2 rounded-full bg-gradient-to-r from-yellow-500 to-amber-500 text-white hover:from-yellow-600 hover:to-amber-600 transition-all duration-300 hover:scale-110 hover:shadow-lg">
+            <ShoppingBag className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </article>
+  </Link>
+);
+
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+  const getPageNumbers = () => {
+    const delta = 2;
+    const range = [];
+    const rangeWithDots = [];
+
+    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+      range.push(i);
+    }
+
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, '...');
+    } else {
+      rangeWithDots.push(1);
+    }
+
+    rangeWithDots.push(...range);
+
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push('...', totalPages);
+    } else {
+      rangeWithDots.push(totalPages);
+    }
+
+    return rangeWithDots;
+  };
+
+  if (totalPages <= 1) return null;
+
+  return (
+    <div className="flex items-center justify-center gap-2 mt-12">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className="p-3 rounded-2xl bg-gradient-to-r from-yellow-100 to-amber-100 text-amber-600 hover:from-yellow-200 hover:to-amber-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+
+      {getPageNumbers().map((page, index) => (
+        <button
+          key={index}
+          onClick={() => typeof page === 'number' && onPageChange(page)}
+          disabled={page === '...'}
+          className={`px-4 py-3 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 ${
+            page === currentPage
+              ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg'
+              : page === '...'
+              ? 'cursor-default text-slate-400'
+              : 'bg-gradient-to-r from-yellow-100 to-amber-100 text-amber-600 hover:from-yellow-200 hover:to-amber-200'
+          }`}
+        >
+          {page}
+        </button>
+      ))}
+
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="p-3 rounded-2xl bg-gradient-to-r from-yellow-100 to-amber-100 text-amber-600 hover:from-yellow-200 hover:to-amber-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+    </div>
+  );
+};
 
 export default function Products({ productData, status }) {
-//   console.log(productData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isVisible, setIsVisible] = useState(false);
+  const itemsPerPage = 12;
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  // Calculate pagination
+  const totalPages = Math.ceil((productData?.length || 0) / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProducts = productData?.slice(startIndex, endIndex) || [];
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <>
-      
-        
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-amber-50 py-12 px-4">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-br from-yellow-400/10 to-amber-400/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-br from-amber-400/10 to-orange-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+
+      <div className="container mx-auto relative z-10">
         {status === "loading" ? (
-          <>
-            <div className="text-center items-center mt-52">
-              <div role="status">
-                <svg
-                  aria-hidden="true"
-                  className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-500"
-                  viewBox="0 0 100 101"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                    fill="currentFill"
-                  />
-                </svg>
-                <span className="sr-only">Loading...</span>
-              </div>
+          <div className="flex flex-col items-center justify-center min-h-[60vh]">
+            <div className="relative">
+              <Loader2 className="w-16 h-16 text-yellow-500 animate-spin" />
+              <div className="absolute inset-0 w-16 h-16 border-4 border-yellow-200 rounded-full animate-pulse" />
             </div>
-          </>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4">
-            {productData.map((item) => (
-              <Link to={`/product/${item.id}`}>
-                <article className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden border border-gray-300">
-                  <div>
-                    <img
-                      className="object-cover h-64 w-full"
-                      src={item.images[0] || "images/No_Image_Available.jpg"}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1 mt-4 px-4 py-2">
-                    <h2 className="text-lg font-semibold text-gray-800">
-                      {item.title}
-                    </h2>
-                    <h2 className="text-sm font-medium text-gray-800">
-                      {item.brand}
-                    </h2>
-                    <span className="font-normal text-gray-600">
-                      {item.description.slice(0, 40)}...
-                    </span>
-                    <span className="font-semibold text-gray-800">
-                      ${item.price}
-                    </span>
-                    <div className="flex gap-1 py-2">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <svg
-                            key={i}
-                            className={`h-5 w-5 ${
-                              i < item.rating
-                                ? "text-yellow-500"
-                                : "text-gray-400"
-                            }`}
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.367 4.21a1 1 0 00.95.69h4.424c.969 0 1.371 1.24.588 1.81l-3.58 2.598a1 1 0 00-.364 1.118l1.368 4.21c.3.92-.755 1.688-1.538 1.117l-3.58-2.598a1 1 0 00-1.175 0l-3.58 2.598c-.783.57-1.838-.196-1.538-1.117l1.367-4.21a1 1 0 00-.364-1.118L2.02 9.637c-.783-.57-.38-1.81.588-1.81h4.424a1 1 0 00.95-.69l1.367-4.21z" />
-                          </svg>
-                        ))}{" "}
-                        {item.rating}
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              </Link>
-            ))}
+            <p className="mt-6 text-xl text-slate-600 font-medium">Loading amazing products...</p>
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+              {[...Array(8)].map((_, index) => (
+                <SkeletonLoader key={index} />
+              ))}
+            </div>
           </div>
+        ) : (
+          <>
+           
+
+            {/* Products Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6 md:gap-8">
+              {currentProducts.map((item, index) => (
+                <div
+                  key={item.id}
+                  className={`transform transition-all duration-1000 ${
+                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                  }`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  <ProductCard item={item} />
+                </div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+
+            {/* Empty State */}
+            {productData?.length === 0 && (
+              <div className="text-center py-20">
+                <div className="w-24 h-24 bg-gradient-to-r from-yellow-200 to-amber-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <ShoppingBag className="w-12 h-12 text-amber-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-2">No Products Found</h3>
+                <p className="text-slate-600">We couldn't find any products to display.</p>
+              </div>
+            )}
+          </>
         )}
-      
-    </>
+      </div>
+    </div>
   );
 }
